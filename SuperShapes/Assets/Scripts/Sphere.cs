@@ -33,8 +33,8 @@ public class Sphere : MonoBehaviour {
         //clear out the old mesh
         m.Clear();
 
-        Vector3[] vectors = new Vector3[(resolution + 1) * (resolution + 1)];
-        Vector2[] uvs = new Vector2[(resolution + 1) * (resolution + 1)];
+        Vector3[] vectors = new Vector3[(resolution + 1) * (resolution )];
+        Vector2[] uvs = new Vector2[(resolution + 1) * (resolution )];
 
         float seconds = Time.timeSinceLevelLoad;
 
@@ -42,7 +42,7 @@ public class Sphere : MonoBehaviour {
         int vIndex = 0;
          for (int i = 0; i < resolution + 1; i++) {
             float lat = Remap(i, 0, resolution, 0, Mathf.PI);
-            for (int j = 0; j < resolution + 1; j++)
+            for (int j = 0; j < resolution; j++)
             {
                 float lon = Remap(j, 0, resolution, 0, Mathf.PI * 2);
                 float x = r * Mathf.Sin(lat) * Mathf.Cos(lon);
@@ -59,7 +59,7 @@ public class Sphere : MonoBehaviour {
         //there is room to optimise this by not recalculating/reassigning if the 
         //count of the vertecies hasn't changed because the topology will still
         // be the same.
-        int triCount = 2 * (resolution) * (resolution);
+        int triCount = 2 * (resolution + 1) * (resolution);
         int[] triIndecies = new int[triCount * 3];
         int curTriIndex = 0;
         for (int i = 0; i < resolution; i++)
