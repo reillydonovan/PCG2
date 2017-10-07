@@ -47,6 +47,10 @@ public class SuperShape : MonoBehaviour
     public float a = 1.0f;
     public float b = 1.0f;
 
+
+    //latitude = vertical angle
+    //longitude = horizontal angle
+
     // Use this for initialization
     void Start()
     {
@@ -117,17 +121,17 @@ public class SuperShape : MonoBehaviour
         //there is room to optimise this by not recalculating/reassigning if the 
         //count of the vertecies hasn't changed because the topology will still
         // be the same.
-        int triCount = 2 * (latDivs - 1) * (lonDivs);
+        int triCount = 2 * (latDivs) * (lonDivs);
         int[] triIndecies = new int[triCount * 3];
         int curTriIndex = 0;
-        for (int i = 0; i < latDivs - 1; i++)
+        for (int i = 0; i < latDivs - 1; i++)//phi
         {
-            for (int j = 0; j < latDivs; j++)
+            for (int j = 0; j < lonDivs; j++)//theta
             {
-                int ul = i * latDivs + j;//"upper left" vert
-                int ur = i * latDivs + ((j + 1) % latDivs);//"upper right" vert
-                int ll = (i + 1) * latDivs + j;//"lower left" vert
-                int lr = (i + 1) * latDivs + ((j + 1) % latDivs); //"lower right" vert
+                int ul = i * lonDivs + j;//"upper left" vert
+                int ur = i * lonDivs + ((j + 1) % lonDivs);//"upper right" vert
+                int ll = (i + 1) * lonDivs + j;//"lower left" vert
+                int lr = (i + 1) * lonDivs + ((j + 1) % lonDivs); //"lower right" vert
                                                                       //triangle one
                 triIndecies[curTriIndex++] = ul;
                 triIndecies[curTriIndex++] = ll;
