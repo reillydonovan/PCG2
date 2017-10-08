@@ -43,6 +43,8 @@ public class Sphere : MonoBehaviour {
                 float x = r * Mathf.Sin(lat) * Mathf.Cos(lon);
                 float y = r * Mathf.Sin(lat) * Mathf.Sin(lon);
                 float z = r * Mathf.Cos(lat);
+
+                uvs[vIndex] = new Vector2(((j * 1.0f) / (resolution + 1)), ((i * 1.0f) / (resolution + 1)));
                 vectors[vIndex++] = new Vector3(x, y, z);
             }
         }

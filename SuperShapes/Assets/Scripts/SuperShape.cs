@@ -75,14 +75,14 @@ public class SuperShape : MonoBehaviour
         //clear out the old mesh
         m.Clear();
 
-        Vector3[] vectors = new Vector3[latDivs * lonDivs];
-        Vector2[] uvs = new Vector2[latDivs * lonDivs];
+        Vector3[] vectors = new Vector3[(latDivs + 1) * (lonDivs + 1)];
+        Vector2[] uvs = new Vector2[(latDivs + 1) * (lonDivs + 1)];
 
         float seconds = Time.timeSinceLevelLoad;
         
         // build an array of vectors holding the vertex data
         int vIndex = 0;
-        for (int i = 0; i < latDivs; i++)
+        for (int i = 0; i < latDivs + 1; i++)
         {
             float lat = Remap(i, 0, latDivs, -1 * Mathf.PI / 2, Mathf.PI / 2);
             float r2 = Shape(lat, m2, n21, n22, n23);
@@ -114,10 +114,10 @@ public class SuperShape : MonoBehaviour
         // be the same.
 
         
-        int triCount = 2 * (latDivs - 1) * (lonDivs);
+        int triCount = 2 * (latDivs + 1) * (lonDivs + 1);
         int[] triIndecies = new int[triCount * 3];
         int curTriIndex = 0;
-        for (int i = 0; i < latDivs - 1; i++)//phi
+        for (int i = 0; i < latDivs; i++)//phi
         {
             for (int j = 0; j < lonDivs; j++)//theta
             {
