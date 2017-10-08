@@ -15,7 +15,12 @@ public class Sphere : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         this.UpdateMesh(GetComponent<MeshFilter>().mesh);
+
+
+        
+
 	}
 
     Mesh UpdateMesh(Mesh m)
@@ -28,8 +33,8 @@ public class Sphere : MonoBehaviour {
         //clear out the old mesh
         m.Clear();
 
-        Vector3[] vectors = new Vector3[(resolution + 1) * (resolution)];
-        Vector2[] uvs = new Vector2[(resolution + 1) * (resolution)];
+        Vector3[] vectors = new Vector3[(resolution + 1) * (resolution )];
+        Vector2[] uvs = new Vector2[(resolution + 1) * (resolution )];
 
         float seconds = Time.timeSinceLevelLoad;
 
