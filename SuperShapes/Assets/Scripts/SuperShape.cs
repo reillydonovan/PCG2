@@ -26,10 +26,10 @@ public class SuperShape : MonoBehaviour
     public float yMod1TimeResponse = 1.0f; //the amount the wave moves with time
 
 
-    // number of verts along the 'longitude'
-    public int phiDivs = 50;
-    // number of verts along the 'latitude'
-    public int thetaDivs = 50;
+    // number of verts along the 'longitude' phi
+    public int lonDivs = 50;
+    // number of verts along the 'latitude' theta
+    public int latDivs = 50;
     
     public float offset = 0.0f;
     
@@ -75,107 +75,33 @@ public class SuperShape : MonoBehaviour
         //clear out the old mesh
         m.Clear();
 
-<<<<<<< HEAD
         Vector3[] vectors = new Vector3[latDivs * lonDivs];
         Vector2[] uvs = new Vector2[latDivs * lonDivs];
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        Vector3[] vectors = new Vector3[phiDivs * thetaDivs];
-        Vector2[] uvs = new Vector2[phiDivs * thetaDivs];
-=======
->>>>>>> parent of c4f278e... normals need to be inverted...
-=======
->>>>>>> parent of c4f278e... normals need to be inverted...
-=======
->>>>>>> parent of c4f278e... normals need to be inverted...
-        //  float radsPerPhiDiv = Mathf.PI / (phiDivs - 1);
-        //    float radsPerThetaDiv = 2.0f * Mathf.PI / thetaDivs;
-        //float radsPerThtaDiv = Mathf.PI / (thetaDivs - 1);
-        //  float radsPerPhiDiv = 2.0f * Mathf.PI / phiDivs;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of f5aa72d... got the supershape to work
-=======
->>>>>>> parent of c4f278e... normals need to be inverted...
-=======
->>>>>>> parent of c4f278e... normals need to be inverted...
-=======
->>>>>>> parent of c4f278e... normals need to be inverted...
 
         float seconds = Time.timeSinceLevelLoad;
-
+        
         // build an array of vectors holding the vertex data
         int vIndex = 0;
-        for (int i = 0; i < thetaDivs; i++)
+        for (int i = 0; i < latDivs; i++)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            //   float theta = radsPerThetaDiv * i;
->>>>>>> parent of c4f278e... normals need to be inverted...
-=======
-            //   float theta = radsPerThetaDiv * i;
->>>>>>> parent of c4f278e... normals need to be inverted...
-=======
-            //   float theta = radsPerThetaDiv * i;
->>>>>>> parent of c4f278e... normals need to be inverted...
             float lat = Remap(i, 0, latDivs, -1 * Mathf.PI / 2, Mathf.PI / 2);
-            // float r1 = Shape(phi, m1, 60, 100, 30);
             float r2 = Shape(lat, m2, n21, n22, n23);
             for (int j = 0; j < lonDivs; j++)
             {
-                // float phi = radsPerPhiDiv * j;
                 float lon = Remap(j, 0, lonDivs, -1 * Mathf.PI, Mathf.PI);
-                // float r2 = Shape(theta, m2, 10, 10, 10);
                 float r1 = Shape(lon, m1, n11, n12, n13);
-=======
-            //   float theta = radsPerThetaDiv * i;
-            float theta = Remap(i, 0, thetaDivs, -1 * Mathf.PI / 2, Mathf.PI / 2);
-            // float r1 = Shape(phi, m1, 60, 100, 30);
-            float r2 = Shape(theta, m2, n21, n22, n23);
-            for (int j = 0; j < phiDivs; j++)
-            {
-                // float phi = radsPerPhiDiv * j;
-                float phi = Remap(j, 0, phiDivs, -1 * Mathf.PI, Mathf.PI);
-                // float r2 = Shape(theta, m2, 10, 10, 10);
-                float r1 = Shape(phi, m1, n11, n12, n13);
->>>>>>> parent of f5aa72d... got the supershape to work
                 //the get radius function is where 'hamonics' are added
                 // float radius = GetRadius(phi, theta, seconds);
                 //add uvs so that we can texture the mesh if we want
-                uvs[vIndex] = new Vector2(j * 1.0f / thetaDivs, i * 1.0f / phiDivs);
+                uvs[vIndex] = new Vector2(j * 1.0f / lonDivs, i * 1.0f / latDivs);
                 //create a vertex 
                 //optimization alert: since the only thing that changes here is the radius
                 //(when the number of divisions stays the same) we could cache these numbers
                 // and use a shader to create and apply the variations in radius and compute 
                 // the normals.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            
->>>>>>> parent of c4f278e... normals need to be inverted...
-=======
-            
->>>>>>> parent of c4f278e... normals need to be inverted...
-=======
-            
->>>>>>> parent of c4f278e... normals need to be inverted...
                 vectors[vIndex++] = new Vector3(r * r1 * r2 * Mathf.Cos(lon) * Mathf.Cos(lat),
                                                 r * r1 * r2 * Mathf.Sin(lon) * Mathf.Cos(lat),
                                                 r * r2 * Mathf.Sin(lat));
-=======
-            
-                vectors[vIndex++] = new Vector3(r * r1 * r2 * Mathf.Cos(phi) * Mathf.Cos(theta),
-                                                r * r1 * r2 * Mathf.Sin(phi) * Mathf.Cos(theta),
-                                                r * r2 * Mathf.Sin(phi));
->>>>>>> parent of f5aa72d... got the supershape to work
             }
         }
         m.vertices = vectors;
@@ -186,22 +112,9 @@ public class SuperShape : MonoBehaviour
         //there is room to optimise this by not recalculating/reassigning if the 
         //count of the vertecies hasn't changed because the topology will still
         // be the same.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         
         int triCount = 2 * (latDivs - 1) * (lonDivs);
-=======
-        int triCount = 2 * (latDivs) * (lonDivs);
->>>>>>> parent of c4f278e... normals need to be inverted...
-=======
-        int triCount = 2 * (latDivs) * (lonDivs);
->>>>>>> parent of c4f278e... normals need to be inverted...
-=======
-        int triCount = 2 * (latDivs) * (lonDivs);
->>>>>>> parent of c4f278e... normals need to be inverted...
         int[] triIndecies = new int[triCount * 3];
         int curTriIndex = 0;
         for (int i = 0; i < latDivs - 1; i++)//phi
@@ -212,19 +125,6 @@ public class SuperShape : MonoBehaviour
                 int ur = i * lonDivs + ((j + 1) % lonDivs);//"upper right" vert
                 int ll = (i + 1) * lonDivs + j;//"lower left" vert
                 int lr = (i + 1) * lonDivs + ((j + 1) % lonDivs); //"lower right" vert
-=======
-        int triCount = 2 * (phiDivs - 1) * (thetaDivs);
-        int[] triIndecies = new int[triCount * 3];
-        int curTriIndex = 0;
-        for (int i = 0; i < phiDivs - 1; i++)
-        {
-            for (int j = 0; j < thetaDivs; j++)
-            {
-                int ul = i * thetaDivs + j;//"upper left" vert
-                int ur = i * thetaDivs + ((j + 1) % thetaDivs);//"upper right" vert
-                int ll = (i + 1) * thetaDivs + j;//"lower left" vert
-                int lr = (i + 1) * thetaDivs + ((j + 1) % thetaDivs); //"lower right" vert
->>>>>>> parent of f5aa72d... got the supershape to work
                                                                       //triangle one
                 triIndecies[curTriIndex++] = ul;
                 triIndecies[curTriIndex++] = ll;
@@ -236,6 +136,7 @@ public class SuperShape : MonoBehaviour
                 triIndecies[curTriIndex++] = ur;
             }
         }
+  
         m.triangles = triIndecies;
         //use the triangle info to calculate vertex normals so we dont have to B)
         m.RecalculateNormals();
