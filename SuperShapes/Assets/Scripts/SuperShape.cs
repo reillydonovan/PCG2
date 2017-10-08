@@ -78,14 +78,20 @@ public class SuperShape : MonoBehaviour
 <<<<<<< HEAD
         Vector3[] vectors = new Vector3[latDivs * lonDivs];
         Vector2[] uvs = new Vector2[latDivs * lonDivs];
+<<<<<<< HEAD
 =======
         Vector3[] vectors = new Vector3[phiDivs * thetaDivs];
         Vector2[] uvs = new Vector2[phiDivs * thetaDivs];
+=======
+>>>>>>> parent of c4f278e... normals need to be inverted...
         //  float radsPerPhiDiv = Mathf.PI / (phiDivs - 1);
         //    float radsPerThetaDiv = 2.0f * Mathf.PI / thetaDivs;
         //float radsPerThtaDiv = Mathf.PI / (thetaDivs - 1);
         //  float radsPerPhiDiv = 2.0f * Mathf.PI / phiDivs;
+<<<<<<< HEAD
 >>>>>>> parent of f5aa72d... got the supershape to work
+=======
+>>>>>>> parent of c4f278e... normals need to be inverted...
 
         float seconds = Time.timeSinceLevelLoad;
 
@@ -94,11 +100,18 @@ public class SuperShape : MonoBehaviour
         for (int i = 0; i < thetaDivs; i++)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            //   float theta = radsPerThetaDiv * i;
+>>>>>>> parent of c4f278e... normals need to be inverted...
             float lat = Remap(i, 0, latDivs, -1 * Mathf.PI / 2, Mathf.PI / 2);
+            // float r1 = Shape(phi, m1, 60, 100, 30);
             float r2 = Shape(lat, m2, n21, n22, n23);
             for (int j = 0; j < lonDivs; j++)
             {
+                // float phi = radsPerPhiDiv * j;
                 float lon = Remap(j, 0, lonDivs, -1 * Mathf.PI, Mathf.PI);
+                // float r2 = Shape(theta, m2, 10, 10, 10);
                 float r1 = Shape(lon, m1, n11, n12, n13);
 =======
             //   float theta = radsPerThetaDiv * i;
@@ -122,6 +135,10 @@ public class SuperShape : MonoBehaviour
                 // and use a shader to create and apply the variations in radius and compute 
                 // the normals.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            
+>>>>>>> parent of c4f278e... normals need to be inverted...
                 vectors[vIndex++] = new Vector3(r * r1 * r2 * Mathf.Cos(lon) * Mathf.Cos(lat),
                                                 r * r1 * r2 * Mathf.Sin(lon) * Mathf.Cos(lat),
                                                 r * r2 * Mathf.Sin(lat));
@@ -142,9 +159,13 @@ public class SuperShape : MonoBehaviour
         //count of the vertecies hasn't changed because the topology will still
         // be the same.
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         
         int triCount = 2 * (latDivs - 1) * (lonDivs);
+=======
+        int triCount = 2 * (latDivs) * (lonDivs);
+>>>>>>> parent of c4f278e... normals need to be inverted...
         int[] triIndecies = new int[triCount * 3];
         int curTriIndex = 0;
         for (int i = 0; i < latDivs - 1; i++)//phi
@@ -179,7 +200,6 @@ public class SuperShape : MonoBehaviour
                 triIndecies[curTriIndex++] = ur;
             }
         }
-  
         m.triangles = triIndecies;
         //use the triangle info to calculate vertex normals so we dont have to B)
         m.RecalculateNormals();
