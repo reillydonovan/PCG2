@@ -79,9 +79,12 @@ public class SuperShape : MonoBehaviour
         Vector3[] vectors = new Vector3[latDivs * lonDivs];
         Vector2[] uvs = new Vector2[latDivs * lonDivs];
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         Vector3[] vectors = new Vector3[phiDivs * thetaDivs];
         Vector2[] uvs = new Vector2[phiDivs * thetaDivs];
+=======
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
 >>>>>>> parent of c4f278e... normals need to be inverted...
         //  float radsPerPhiDiv = Mathf.PI / (phiDivs - 1);
@@ -89,7 +92,10 @@ public class SuperShape : MonoBehaviour
         //float radsPerThtaDiv = Mathf.PI / (thetaDivs - 1);
         //  float radsPerPhiDiv = 2.0f * Mathf.PI / phiDivs;
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> parent of f5aa72d... got the supershape to work
+=======
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
 >>>>>>> parent of c4f278e... normals need to be inverted...
 
@@ -101,6 +107,10 @@ public class SuperShape : MonoBehaviour
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            //   float theta = radsPerThetaDiv * i;
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
             //   float theta = radsPerThetaDiv * i;
 >>>>>>> parent of c4f278e... normals need to be inverted...
@@ -136,6 +146,10 @@ public class SuperShape : MonoBehaviour
                 // the normals.
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
             
 >>>>>>> parent of c4f278e... normals need to be inverted...
@@ -160,9 +174,13 @@ public class SuperShape : MonoBehaviour
         // be the same.
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         
         int triCount = 2 * (latDivs - 1) * (lonDivs);
+=======
+        int triCount = 2 * (latDivs) * (lonDivs);
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
         int triCount = 2 * (latDivs) * (lonDivs);
 >>>>>>> parent of c4f278e... normals need to be inverted...

@@ -72,6 +72,7 @@ MonoBehaviour:
   m_MaxSize: {x: 16010, y: 14042}
   vertical: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   controlID: 131
 =======
   m_MinSize: {x: 887, y: 342}
@@ -79,6 +80,9 @@ MonoBehaviour:
   vertical: 0
   controlID: 91
 >>>>>>> parent of f5aa72d... got the supershape to work
+=======
+  controlID: 34
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
   controlID: 34
 >>>>>>> parent of c4f278e... normals need to be inverted...
@@ -255,10 +259,14 @@ MonoBehaviour:
   vertical: 1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   controlID: 75
 =======
   controlID: 92
 >>>>>>> parent of f5aa72d... got the supershape to work
+=======
+  controlID: 94
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
   controlID: 94
 >>>>>>> parent of c4f278e... normals need to be inverted...
@@ -446,6 +454,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_SelectedIDs: 20260000
     m_LastClickedID: 9760
     m_ExpandedIDs: 000000002026000000ca9a3bffffff7f
@@ -454,6 +463,11 @@ MonoBehaviour:
     m_LastClickedID: 9756
     m_ExpandedIDs: 000000001a260000
 >>>>>>> parent of f5aa72d... got the supershape to work
+=======
+    m_SelectedIDs: 28260000
+    m_LastClickedID: 9768
+    m_ExpandedIDs: 000000001e26000000ca9a3bffffff7f
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
     m_SelectedIDs: 28260000
     m_LastClickedID: 9768
@@ -614,12 +628,17 @@ MonoBehaviour:
       m_UserAcceptedRename: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       m_Name: SuperShape
       m_OriginalName: SuperShape
 =======
       m_Name: 
       m_OriginalName: 
 >>>>>>> parent of f5aa72d... got the supershape to work
+=======
+      m_Name: 
+      m_OriginalName: 
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
       m_Name: 
       m_OriginalName: 
@@ -632,10 +651,14 @@ MonoBehaviour:
         height: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       m_UserData: 9810
 =======
       m_UserData: 0
 >>>>>>> parent of f5aa72d... got the supershape to work
+=======
+      m_UserData: 0
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
       m_UserData: 0
 >>>>>>> parent of c4f278e... normals need to be inverted...
@@ -679,10 +702,14 @@ MonoBehaviour:
   m_SceneLighting: 1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   lastFramingTime: 27060.156025841494
 =======
   lastFramingTime: 2991.1741448888915
 >>>>>>> parent of f5aa72d... got the supershape to work
+=======
+  lastFramingTime: 3783.131084951499
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
   lastFramingTime: 3783.131084951499
 >>>>>>> parent of c4f278e... normals need to be inverted...
@@ -717,7 +744,11 @@ MonoBehaviour:
   m_Rotation:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: 0.042905137, y: -0.95655364, z: 0.18986827, w: 0.21715795}
+=======
+    m_Target: {x: 0.04659963, y: -0.94443, z: 0.28691357, w: 0.15412238}
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
     m_Target: {x: 0.04659963, y: -0.94443, z: 0.28691357, w: 0.15412238}
 >>>>>>> parent of c4f278e... normals need to be inverted...
@@ -726,6 +757,7 @@ MonoBehaviour:
   m_Size:
     m_Target: 2.1308706
     speed: 2
+<<<<<<< HEAD
 <<<<<<< HEAD
     m_Value: 2.657803
 =======
@@ -737,6 +769,9 @@ MonoBehaviour:
     speed: 2
     m_Value: 3.5253954
 >>>>>>> parent of f5aa72d... got the supershape to work
+=======
+    m_Value: 2.1308706
+>>>>>>> parent of c4f278e... normals need to be inverted...
 =======
     m_Value: 2.1308706
 >>>>>>> parent of c4f278e... normals need to be inverted...
