@@ -219,12 +219,12 @@ Prefab:
     - target: {fileID: 114396028324966726, guid: 8cafbad956e019c49b6e8fce7b284246,
         type: 2}
       propertyPath: latDivs
-      value: 19
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114396028324966726, guid: 8cafbad956e019c49b6e8fce7b284246,
         type: 2}
       propertyPath: lonDivs
-      value: 113
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8cafbad956e019c49b6e8fce7b284246, type: 2}

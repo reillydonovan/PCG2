@@ -125,21 +125,49 @@ public class SuperShape : MonoBehaviour
                 int ur = i * lonDivs + ((j + 1) % lonDivs);//"upper right" vert
                 int ll = (i + 1) * lonDivs + j;//"lower left" vert
                 int lr = (i + 1) * lonDivs + ((j + 1) % lonDivs); //"lower right" vert
-                                                                      //triangle one
-                triIndecies[curTriIndex++] = ul;
-                triIndecies[curTriIndex++] = ll;
-                triIndecies[curTriIndex++] = ur;
+                                                                  //triangle one
+                triIndecies[curTriIndex++] = ll;//ur; //ul;
+                triIndecies[curTriIndex++] = ul; //lr; //ll;
+                triIndecies[curTriIndex++] = ur; // ll; //ur;
 
                 //triangle two
-                triIndecies[curTriIndex++] = ll;
-                triIndecies[curTriIndex++] = lr;
-                triIndecies[curTriIndex++] = ur;
+                triIndecies[curTriIndex++] = ur; //ll;
+                triIndecies[curTriIndex++] = lr; // ul; //lr;
+                triIndecies[curTriIndex++] = ll; // ur;
             }
         }
   
         m.triangles = triIndecies;
         //use the triangle info to calculate vertex normals so we dont have to B)
+        Vector3[] normals = m.normals;
+        /*
+        for (int i = 0; i < normals.Length; i++)
+        {
+
+            normals[i] = -1 * normals[i];
+
+            m.normals = normals;
+
+            for (int k = 0; i < m.subMeshCount; k++)
+            {
+                int[] tris = m.GetTriangles(i);
+                for (int j = 0; j < tris.Length; j += 3)
+                {
+                    int temp = tris[j];
+                    tris[j] = tris[j + 1];
+                    tris[j + 1] = temp;
+
+
+
+                }
+                m.SetTriangles(tris, k);
+
+            
+        }*/
+
         m.RecalculateNormals();
+
+      
         return m;
     }
 
@@ -158,6 +186,7 @@ public class SuperShape : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireMesh(UpdateMesh(null), transform.position, transform.rotation, transform.localScale);
+     
 
     }
 
