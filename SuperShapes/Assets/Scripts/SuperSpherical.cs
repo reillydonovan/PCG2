@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SuperSpherical : MonoBehaviour 
 {
+    public bool torus = false;
 	// number of verts along the 'longitude'
 	public int phiDivs = 10;
 	// number of verts along the 'latitude'
@@ -84,6 +85,7 @@ public class SuperSpherical : MonoBehaviour
 				//(when the number of divisions stays the same) we could cache these numbers
 				// and use a shader to create and apply the variations in radius and compute 
 				// the normals.
+
 				vectors[vIndex++] = new Vector3(radius*Mathf.Sin(phi)*Mathf.Cos(theta),
 												radius*Mathf.Sin(phi)*Mathf.Sin(theta),
 												radius*Mathf.Cos(phi));				

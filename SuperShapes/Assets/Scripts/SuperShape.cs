@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SuperShape : MonoBehaviour
 {
-
+    public bool torus = false;
     //there are two waves that can be applied to and modify the surface of the spere
     //there is no reason that these have to be the only two waves, but I cannot decide 
     //on a approach to easily make ANY number of them in the editor...
@@ -32,20 +32,25 @@ public class SuperShape : MonoBehaviour
     public int latDivs = 50;
     
     public float offset = 0.0f;
-    
+
     public float m1 = 0.0f;
-    public float m2 = 0.0f;
-    public float mchange = 0.0f;
+    public float m1change = 0.0f;
     public float n11 = 0.0f;
     public float n12 = 0.0f;
     public float n13 = 0.0f;
-        public float n21 = 0.0f;
-        public float n22 = 0.0f;
-        public float n23 = 0.0f;
+    public float a1 = 1.0f;
+    public float b1 = 1.0f;
+
+    public float m2 = 0.0f;
+    public float m2change = 0.0f;
+    public float n21 = 0.0f;
+    public float n22 = 0.0f;
+    public float n23 = 0.0f;
+    public float a2 = 1.0f;
+    public float b2 = 1.0f;
 
     public float r = 200.0f;
-    public float a = 1.0f;
-    public float b = 1.0f;
+   
 
 
     //latitude = vertical angle
@@ -82,14 +87,14 @@ public class SuperShape : MonoBehaviour
         for (int i = 0; i < latDivs + 1; i++)
         {
             float lat = Remap(i, 0, latDivs, -1 * Mathf.PI / 2, Mathf.PI / 2);
-            float r2 = Shape(lat, m2, n21, n22, n23);
+            float r2 = Shape(lat, m2, n21, n22, n23, a2, b2);
             for (int j = 0; j < lonDivs; j++)
             {
                 float lon = Remap(j, 0, lonDivs, -1 * Mathf.PI, Mathf.PI);
-                float r1 = Shape(lon, m1, n11, n12, n13);
+                float r1 = Shape(lon, m1, n11, n12, n13, a1, b1);
 
                 //the get radius function is where 'hamonics' are added
-                 m1 = GetRadius(lonDivs, latDivs, seconds);
+               //  m1 = GetRadius(lonDivs, latDivs, seconds);
 
                 //add uvs so that we can texture the mesh if we want
                 uvs[vIndex] = new Vector2(j * 1.0f / lonDivs, i * 1.0f / latDivs);
@@ -99,9 +104,18 @@ public class SuperShape : MonoBehaviour
                 //(when the number of divisions stays the same) we could cache these numbers
                 // and use a shader to create and apply the variations in radius and compute 
                 // the normals.
-                vectors[vIndex++] = new Vector3(r * r1 * r2 * Mathf.Cos(lon) * Mathf.Cos(lat),
-                                                r * r1 * r2 * Mathf.Sin(lon) * Mathf.Cos(lat),
-                                                r * r2 * Mathf.Sin(lat));
+                if (torus)
+                {
+                    vectors[vIndex++] = new Vector3(Mathf.Cos(lon) * (r1 + r2 * Mathf.Cos(lat)),
+                                               Mathf.Sin(lon) * (r1 + r2 * Mathf.Cos(lat)),
+                                               r * r2 * Mathf.Sin(lat));
+                }
+                else
+                {
+                    vectors[vIndex++] = new Vector3(r * r1 * r2 * Mathf.Cos(lon) * Mathf.Cos(lat),
+                                                    r * r1 * r2 * Mathf.Sin(lon) * Mathf.Cos(lat),
+                                                    r * r2 * Mathf.Sin(lat));
+                }
             }
         }
         m.vertices = vectors;
@@ -166,12 +180,12 @@ public class SuperShape : MonoBehaviour
     }
 
     //SuperShape Formula
-    float Shape(float _theta, float _m, float _n1, float _n2, float _n3)
+    float Shape(float _theta, float _m, float _n1, float _n2, float _n3, float _a, float _b)
     {
-        float t1 = Mathf.Abs((1 / a) * Mathf.Cos(_m * _theta / 4));
+        float t1 = Mathf.Abs((1 / _a) * Mathf.Cos(_m * _theta / 4));
         t1 = Mathf.Pow(t1, _n2);
 
-        float t2 = Mathf.Abs((1 / b) * Mathf.Sin(_m * _theta / 4));
+        float t2 = Mathf.Abs((1 / _b) * Mathf.Sin(_m * _theta / 4));
         t2 = Mathf.Pow(t2, _n3);
 
         float t3 = t1 + t2;
