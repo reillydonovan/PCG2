@@ -63,16 +63,13 @@ public class SuperShape : MonoBehaviour
     {
         this.UpdateMesh(GetComponent<MeshFilter>().mesh);
     }
-    // create or update a mesh object to have a sphere with hamonic waves all over
-    // it
+
     Mesh UpdateMesh(Mesh m)
     {
         if (m == null)
         {
             m = new Mesh();
         }
-
-        //clear out the old mesh
         m.Clear();
 
         Vector3[] vectors = new Vector3[(latDivs + 1) * (lonDivs + 1)];
@@ -90,10 +87,13 @@ public class SuperShape : MonoBehaviour
             {
                 float lon = Remap(j, 0, lonDivs, -1 * Mathf.PI, Mathf.PI);
                 float r1 = Shape(lon, m1, n11, n12, n13);
+
                 //the get radius function is where 'hamonics' are added
-                // float radius = GetRadius(phi, theta, seconds);
+                 m1 = GetRadius(lonDivs, latDivs, seconds);
+
                 //add uvs so that we can texture the mesh if we want
                 uvs[vIndex] = new Vector2(j * 1.0f / lonDivs, i * 1.0f / latDivs);
+
                 //create a vertex 
                 //optimization alert: since the only thing that changes here is the radius
                 //(when the number of divisions stays the same) we could cache these numbers
@@ -117,68 +117,43 @@ public class SuperShape : MonoBehaviour
         int triCount = 2 * (latDivs + 1) * (lonDivs + 1);
         int[] triIndecies = new int[triCount * 3];
         int curTriIndex = 0;
-        for (int i = 0; i < latDivs; i++)//phi
+        for (int i = 0; i < latDivs; i++)
         {
-            for (int j = 0; j < lonDivs; j++)//theta
+            for (int j = 0; j < lonDivs; j++)
             {
-                int ul = i * lonDivs + j;//"upper left" vert
-                int ur = i * lonDivs + ((j + 1) % lonDivs);//"upper right" vert
-                int ll = (i + 1) * lonDivs + j;//"lower left" vert
-                int lr = (i + 1) * lonDivs + ((j + 1) % lonDivs); //"lower right" vert
-                                                                  //triangle one
-                triIndecies[curTriIndex++] = ll;//ur; //ul;
-                triIndecies[curTriIndex++] = ul; //lr; //ll;
-                triIndecies[curTriIndex++] = ur; // ll; //ur;
+                int ul = i * lonDivs + j;
+                int ur = i * lonDivs + ((j + 1) % lonDivs);
+                int ll = (i + 1) * lonDivs + j;
+                int lr = (i + 1) * lonDivs + ((j + 1) % lonDivs);
+                                                                  
+                //triangle one
+                triIndecies[curTriIndex++] = ll;
+                triIndecies[curTriIndex++] = ul; 
+                triIndecies[curTriIndex++] = ur; 
 
                 //triangle two
-                triIndecies[curTriIndex++] = ur; //ll;
-                triIndecies[curTriIndex++] = lr; // ul; //lr;
-                triIndecies[curTriIndex++] = ll; // ur;
+                triIndecies[curTriIndex++] = ur; 
+                triIndecies[curTriIndex++] = lr; 
+                triIndecies[curTriIndex++] = ll; 
             }
         }
-  
+
         m.triangles = triIndecies;
         //use the triangle info to calculate vertex normals so we dont have to B)
-        Vector3[] normals = m.normals;
-        /*
-        for (int i = 0; i < normals.Length; i++)
-        {
-
-            normals[i] = -1 * normals[i];
-
-            m.normals = normals;
-
-            for (int k = 0; i < m.subMeshCount; k++)
-            {
-                int[] tris = m.GetTriangles(i);
-                for (int j = 0; j < tris.Length; j += 3)
-                {
-                    int temp = tris[j];
-                    tris[j] = tris[j + 1];
-                    tris[j + 1] = temp;
-
-
-
-                }
-                m.SetTriangles(tris, k);
-
-            
-        }*/
-
-        m.RecalculateNormals();
-
-      
+        Vector3[] normals = m.normals; 
+        m.RecalculateNormals();    
         return m;
+
     }
 
     //get radius applies waves along phi and theta based on the public variables
     //optimization note:
     // this would not be impossible to code as a shader... however, getting multiple 
     // waves affecting the surface at once might take some careful thinking...
-    float GetRadius(float phi, float theta, float time = 0)
+    float GetRadius(float _lonDivs, float _latDivs, float _time = 0)
     {
-        return xMod1YOffset + xMod1Scale * Mathf.Sin(xMod1TimeResponse * time + theta * xMod1Period * time * .1f + xMod1PhaseOffset * time) +
-            yMod1YOffset + yMod1Scale * Mathf.Sin(yMod1TimeResponse * time + phi * yMod1Period * time * .1f + yMod1PhaseOffset * time);
+        return xMod1YOffset + xMod1Scale * Mathf.Sin(xMod1TimeResponse * _time + _latDivs * xMod1Period * _time * .1f + xMod1PhaseOffset * _time) +
+            yMod1YOffset + yMod1Scale * Mathf.Sin(yMod1TimeResponse * _time + _lonDivs * yMod1Period * _time * .1f + yMod1PhaseOffset * _time);
     }
 
     //show a representation in the editor window
