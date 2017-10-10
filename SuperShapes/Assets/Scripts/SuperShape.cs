@@ -5,6 +5,7 @@ using UnityEngine;
 public class SuperShape : MonoBehaviour
 {
     public bool torus = false;
+    public bool spiral = false;
     //there are two waves that can be applied to and modify the surface of the spere
     //there is no reason that these have to be the only two waves, but I cannot decide 
     //on a approach to easily make ANY number of them in the editor...
@@ -50,6 +51,11 @@ public class SuperShape : MonoBehaviour
     public float b2 = 1.0f;
 
     public float r = 200.0f;
+    float x = 0.0f;
+    float y = 0.0f;
+    float z = 0.0f;
+    public float a = 0.0f;
+    public float b = 0.0f;
    
 
 
@@ -106,15 +112,24 @@ public class SuperShape : MonoBehaviour
                 // the normals.
                 if (torus)
                 {
-                    vectors[vIndex++] = new Vector3(Mathf.Cos(lon) * (r1 + r2 * Mathf.Cos(lat)),
-                                               Mathf.Sin(lon) * (r1 + r2 * Mathf.Cos(lat)),
-                                               r * r2 * Mathf.Sin(lat));
+                    x = Mathf.Cos(lon) * (r1 + r2 * Mathf.Cos(lat));
+                    y = Mathf.Sin(lon) * (r1 + r2 * Mathf.Cos(lat));
+                    z = r * r2 * Mathf.Sin(lat);
+                    vectors[vIndex++] = new Vector3(x, y, z);
+                }
+                else if (spiral)
+                {
+                    x = r * (r1 * ((a + b * (lat)) * Mathf.Cos(lat))) * r2 * Mathf.Cos(lon) * Mathf.Cos(lat);
+                    y = r * (r1 * ((a + b * (lat)) * Mathf.Sin(lat))) * r2 * Mathf.Sin(lon) * Mathf.Cos(lat);
+                    z = r * r2 * Mathf.Sin(lat);
+                    vectors[vIndex++] = new Vector3(x, y, z);
                 }
                 else
                 {
-                    vectors[vIndex++] = new Vector3(r * r1 * r2 * Mathf.Cos(lon) * Mathf.Cos(lat),
-                                                    r * r1 * r2 * Mathf.Sin(lon) * Mathf.Cos(lat),
-                                                    r * r2 * Mathf.Sin(lat));
+                    x = r * r1 * r2 * Mathf.Cos(lon) * Mathf.Cos(lat);
+                    y = r * r1 * r2 * Mathf.Sin(lon) * Mathf.Cos(lat);
+                    z = r * r2 * Mathf.Sin(lat);
+                    vectors[vIndex++] = new Vector3(x, y, z);
                 }
             }
         }
