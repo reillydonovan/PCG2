@@ -13,6 +13,10 @@ public class MobiusStrip : MonoBehaviour
     public float radius = 3.5f;
     public float modulation = 0.1f;
     public int frequency = 15;
+
+    public float a = 0.0f;
+    public float u = 0.0f;
+    public float v = 0.0f;
     // Use this for initialization
     void Start()
     {
@@ -45,7 +49,7 @@ public class MobiusStrip : MonoBehaviour
                                          0,
                                       radius * Mathf.Sin(curRingRad));
             float totalRadius = stripWidth * (1 + modulation *
-Mathf.Sin(tm + curRingRad * frequency));
+            Mathf.Sin(tm + curRingRad * frequency));
             Vector3 outVec = ringVec.normalized * totalRadius;
             Vector3 scaledUpV = Vector3.up * totalRadius;
 
@@ -77,7 +81,7 @@ Mathf.Sin(tm + curRingRad * frequency));
             triangles[i + 5] = vIndex + 3;
         }
 
-        newMesh.name = "Procedural Mobius";
+        newMesh.name = "Procedural Klein Bottle";
         newMesh.vertices = vertices;
         newMesh.triangles = triangles;
         newMesh.normals = normals;
