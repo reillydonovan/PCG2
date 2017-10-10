@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperShape : MonoBehaviour
+public class LorentzAttractor : MonoBehaviour
 {
     public bool torus = false;
     public bool spiral = false;
