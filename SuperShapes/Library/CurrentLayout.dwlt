@@ -40,8 +40,8 @@ MonoBehaviour:
     y: 0
     width: 488
     height: 496
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 204, y: 221}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -116,8 +116,8 @@ MonoBehaviour:
     y: 0
     width: 284
     height: 496
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -141,8 +141,8 @@ MonoBehaviour:
     y: 496
     width: 1053
     height: 271
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 16}
@@ -421,7 +421,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 183}
     m_SelectedIDs: 96260000
     m_LastClickedID: 9878
-    m_ExpandedIDs: 000000004e2600007026000094260000c4260000ce260000
+    m_ExpandedIDs: 000000004e2600007026000094260000c6260000d0260000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -449,7 +449,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000004e2600007026000094260000c4260000ce260000
+    m_ExpandedIDs: 000000004e2600007026000094260000c6260000d0260000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -565,8 +565,8 @@ MonoBehaviour:
     height: 475
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 0e270000
-    m_LastClickedID: 9998
+    m_SelectedIDs: 30270000
+    m_LastClickedID: 10032
     m_ExpandedIDs: 1afcffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -649,7 +649,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.1139069, y: -0.8701437, z: 0.23898244, w: -0.41593632}
     speed: 2
-    m_Value: {x: -0.113893196, y: -0.87003905, z: 0.2389537, w: -0.41588628}
+    m_Value: {x: 0.1139069, y: 0.8701438, z: -0.23898245, w: 0.41593632}
   m_Size:
     m_Target: 9.808047
     speed: 2

@@ -90,12 +90,14 @@ public class SuperShapeN : MonoBehaviour
 		for(int i=0; i < phiDivs; i++)
 		{
 			float phi = radsPerPhiDiv*i;
-            float r1 = Shape(phi, m1, n11, n12, n13, a1, b1);
+           // float r1 = Shape(phi, m1, n11, n12, n13, a1, b1);
+            float r2 = Shape(phi, m2, n21, n22, n23, a2, b2);
 
             for (int j=0; j < thetaDivs; j++)
 			{
 				float theta = radsPerThetaDiv*j;
-                float r2 = Shape(theta, m2, n21, n22, n23, a2, b2);
+                //  float r2 = Shape(theta, m2, n21, n22, n23, a2, b2);
+                float r1 = Shape(theta, m1, n11, n12, n13, a1, b1);
                 //the get radius function is where 'hamonics' are added
                 float radius = GetRadius(phi,theta,seconds);
 				//add uvs so that we can texture the mesh if we want
