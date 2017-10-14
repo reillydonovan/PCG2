@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class SuperShapeN : MonoBehaviour 
 {
-	// number of verts along the 'longitude'
-	public int phiDivs = 10;
+    public bool torus = false;
+    public bool spiral = false;
+    // number of verts along the 'longitude'
+    public int phiDivs = 10;
 	// number of verts along the 'latitude'
 	public int thetaDivs = 10;
 
@@ -113,16 +115,43 @@ public class SuperShapeN : MonoBehaviour
                                                  r * Mathf.Sin(phi) * Mathf.Sin(theta),
                                                  r * Mathf.Cos(phi));	
                                               */
-                
-x = r * r1 * r2 * Mathf.Sin(phi) * Mathf.Cos(theta);
-y = r * r1 * r2 * Mathf.Sin(phi) * Mathf.Sin(theta);
-z = r * r2 * Mathf.Cos(phi);
+                if (torus)
+                {
+                    //   x = Mathf.Cos(lon) * (r1 + r2 * Mathf.Cos(lat));
+                    //   y = Mathf.Sin(lon) * (r1 + r2 * Mathf.Cos(lat));
+                    //   z = r * r2 * Mathf.Sin(lat);
+                    //  vectors[vIndex++] = new Vector3(x, y, z);
 
-/*
-                x = r * r1 * r2 * Mathf.Cos(theta) * Mathf.Cos(phi);
-                y = r * r1 * r2 * Mathf.Sin(theta) * Mathf.Cos(phi);
-                z = r * r2 * Mathf.Sin(phi);
-                */
+                    //getting closer
+                    /*
+                    x = Mathf.Cos(theta) * (r1 + r2 * Mathf.Cos(phi));
+                    y = Mathf.Sin(theta) * (r1 + r2 * Mathf.Cos(phi));
+                    z = r * r2 * Mathf.Sin(phi);
+                    */
+                    // x = (R + r * cos(theta)) * cos phi
+                    // y = (R + r * Cos(theta)) * sin(phi)
+                    // z = r * sin(theta)
+                    x = Mathf.Cos(phi) * (r1 + r2 * Mathf.Cos(theta));
+                    y = Mathf.Sin(phi) * ( r1 + r2 * Mathf.Cos(theta));
+                    z = r * r2 * Mathf.Sin(theta);
+                }
+                else if (spiral)
+                    {
+                        x = r * (r1 * a * theta * Mathf.Cos(theta)) * r2 * Mathf.Cos(phi) * Mathf.Cos(theta);
+                        y = r * (r1 * a * theta * Mathf.Sin(theta)) * r2 * Mathf.Sin(phi) * Mathf.Cos(theta);
+                        z = r * r2 * Mathf.Sin(theta);
+                    }
+                else
+                {
+                    x = r * r1 * r2 * Mathf.Sin(phi) * Mathf.Cos(theta);
+                    y = r * r1 * r2 * Mathf.Sin(phi) * Mathf.Sin(theta);
+                    z = r * r2 * Mathf.Cos(phi);
+                }
+                /*
+                                x = r * r1 * r2 * Mathf.Cos(theta) * Mathf.Cos(phi);
+                                y = r * r1 * r2 * Mathf.Sin(theta) * Mathf.Cos(phi);
+                                z = r * r2 * Mathf.Sin(phi);
+                                */
                 vectors[vIndex++] = new Vector3(x, y, z);
             }
 		}
