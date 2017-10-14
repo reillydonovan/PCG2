@@ -2,33 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KleinB3 : MonoBehaviour
+public class ShellN : MonoBehaviour
 {
     public int resolution = 50;
+    float umin = 0.0f;
+    float umax = Mathf.PI * 2;
+    float vmin = 0;
+    float vmax = Mathf.PI * 2;
 
-    // number of verts along the 'longitude'
-    public int phiDivs = 10;
-    // number of verts along the 'latitude'
-    public int thetaDivs = 10;
-
-    public bool bottleShape = false;
-    public bool grayBottle = false;
-    float umin = -1 * Mathf.PI;
-    float umax = Mathf.PI;
-    float vmin = -1 * Mathf.PI;
-    float vmax = Mathf.PI;
 
     public float a = 0.0f;
-    public float u = 2.0f;
-    public float v = 0.0f;
-    public float r = 50.0f;
-    public float m2 = 0.0f;
+    public float b = 0.0f;
+    public float c = 0.0f;
     public float n = 0.0f;
+    public float u = 0.0f;
+    public float v = 0.0f;
+    public float r = 0.0f;
+    public float modulation = 0.1f;
+    public int frequency = 15;
+
 
     public float x = 0.0f;
     public float y = 0.0f;
     public float z = 0.0f;
 
+    //set of vars exposed to create waves parallel to the 'latitude'
     // of the sphere
     public int xMod1Period = 4; //how many ups and downs there are
     public float xMod1PhaseOffset = 1.0f; //how far the wave is shifted
@@ -64,46 +62,40 @@ public class KleinB3 : MonoBehaviour
         }
         m.Clear();
 
-
-        Vector3[] vectors = new Vector3[phiDivs * thetaDivs];
-        Vector2[] uvs = new Vector2[phiDivs * thetaDivs];
-        float radsPerPhiDiv = 2.0f * Mathf.PI / (phiDivs - 1);
-        float radsPerThetaDiv = 2.0f * Mathf.PI / thetaDivs;
+        Vector3[] vectors = new Vector3[(resolution + 1) * (resolution + 1)];
+        Vector2[] uvs = new Vector2[(resolution + 1) * (resolution + 1)];
 
         float seconds = Time.timeSinceLevelLoad;
 
         // build an array of vectors holding the vertex data
         int vIndex = 0;
-        for (int i = 0; i < phiDivs; i++)
+        for (int i = 0; i < resolution + 1; i++)
         {
-            float phi = radsPerPhiDiv * i;
-            u = phi;
-            for (int j = 0; j < thetaDivs; j++)
+            u = Remap(i, 0, resolution, umin, umax);
+            for (int j = 0; j < resolution; j++)
             {
-                float theta = radsPerThetaDiv * j;
-               // u = phi;
-                v = theta;
-             //   u = umin + i * (umax - umin) / resolution;
-              //  v = vmin + j * (vmax - vmin) / resolution;
-
+                v = Remap(j, 0, resolution, vmin, vmax);
+                //   u = umin + i * (umax - umin) / resolution;
+                //   v = vmin + j * (vmax - vmin) / resolution;
 
                 //the get radius function is where 'hamonics' are added
-             //   r = GetRadius(u, v, seconds);
+                r = GetRadius(v, u, seconds);
 
                 //add uvs so that we can texture the mesh if we want
-                uvs[vIndex] = new Vector2(j * 1.0f / thetaDivs, i * 1.0f / phiDivs);
+                uvs[vIndex] = new Vector2(j * 1.0f / resolution, i * 1.0f / resolution);
 
                 //create a vertex 
                 //optimization alert: since the only thing that changes here is the radius
                 //(when the number of divisions stays the same) we could cache these numbers
                 // and use a shader to create and apply the variations in radius and compute 
                 // the normals.
-               
-                    x = r * Mathf.Cos(u) * (a + Mathf.Sin(v) * Mathf.Cos(u / 2) - Mathf.Sin(2 * v) * Mathf.Sin(u / 2) / 2);
-                    y = r * Mathf.Sin(u) * (a + Mathf.Sin(v) * Mathf.Cos(u / 2) - Mathf.Sin(2 * v) * Mathf.Sin(u / 2) / 2);
-                    z = r * Mathf.Sin(u / 2) * Mathf.Sin(v) + Mathf.Cos(u / 2) * Mathf.Sin(2 * v) / 2;
-                    vectors[vIndex++] = new Vector3(x, y, z);
-                
+
+
+                x = a * (1 - u / Mathf.PI * 2) * Mathf.Cos(n * u) * (1 + Mathf.Cos(v)) + c * Mathf.Cos(n * u);
+                y = a * (1 - u / Mathf.PI * 2) * Mathf.Sin(n * u) * (1 + Mathf.Cos(v)) + c * Mathf.Sin(n * u);
+                z = b * u / Mathf.PI * 2 + a * (1 - u / Mathf.PI * 2) * Mathf.Sin(v);
+                vectors[vIndex++] = new Vector3(x, y, z);
+
 
 
 
@@ -119,26 +111,27 @@ public class KleinB3 : MonoBehaviour
         // be the same.
 
 
-        int triCount = 2 * (phiDivs - 1) * (thetaDivs);
+        int triCount = 2 * (resolution + 1) * (resolution + 1);
         int[] triIndecies = new int[triCount * 3];
         int curTriIndex = 0;
-        for (int i = 0; i < phiDivs - 1; i++)
+        for (int i = 0; i < resolution; i++)
         {
-            for (int j = 0; j < thetaDivs; j++)
+            for (int j = 0; j < resolution; j++)
             {
-                int ul = i * thetaDivs + j;//"upper left" vert
-                int ur = i * thetaDivs + ((j + 1) % thetaDivs);//"upper right" vert
-                int ll = (i + 1) * thetaDivs + j;//"lower left" vert
-                int lr = (i + 1) * thetaDivs + ((j + 1) % thetaDivs); //"lower right" vert
-                                                                      //triangle one
-                triIndecies[curTriIndex++] = ul;
+                int ul = i * resolution + j;
+                int ur = i * resolution + ((j + 1) % resolution);
+                int ll = (i + 1) * resolution + j;
+                int lr = (i + 1) * resolution + ((j + 1) % resolution);
+
+                //triangle one
                 triIndecies[curTriIndex++] = ll;
+                triIndecies[curTriIndex++] = ul;
                 triIndecies[curTriIndex++] = ur;
 
                 //triangle two
-                triIndecies[curTriIndex++] = ll;
-                triIndecies[curTriIndex++] = lr;
                 triIndecies[curTriIndex++] = ur;
+                triIndecies[curTriIndex++] = lr;
+                triIndecies[curTriIndex++] = ll;
             }
         }
 
@@ -155,6 +148,7 @@ public class KleinB3 : MonoBehaviour
         return xMod1YOffset + xMod1Scale * Mathf.Sin(xMod1TimeResponse * time + theta * xMod1Period * time * .1f + xMod1PhaseOffset * time) +
             yMod1YOffset + yMod1Scale * Mathf.Sin(yMod1TimeResponse * time + phi * yMod1Period * time * .1f + yMod1PhaseOffset * time);
     }
+
 
     //show a representation in the editor window
     private void OnDrawGizmos()
