@@ -1,14 +1,13 @@
-﻿using System.Collections;
+﻿    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ShellN : MonoBehaviour
-{
-    public int resolution = 50;
-    float umin = 0.0f;
-    float umax = Mathf.PI * 2;
-    float vmin = 0;
-    float vmax = Mathf.PI * 2;
+{  // number of verts along the 'longitude'
+    public int phiDivs = 10;
+    // number of verts along the 'latitude'
+    public int thetaDivs = 10;
+
 
 
     public float a = 0.0f;
@@ -62,27 +61,34 @@ public class ShellN : MonoBehaviour
         }
         m.Clear();
 
-        Vector3[] vectors = new Vector3[(resolution + 1) * (resolution + 1)];
-        Vector2[] uvs = new Vector2[(resolution + 1) * (resolution + 1)];
+
+        Vector3[] vectors = new Vector3[phiDivs * thetaDivs];
+        Vector2[] uvs = new Vector2[phiDivs * thetaDivs];
+        float radsPerPhiDiv = 2.0f * Mathf.PI / (phiDivs - 1);
+        float radsPerThetaDiv = 2.0f * Mathf.PI / thetaDivs;
 
         float seconds = Time.timeSinceLevelLoad;
 
         // build an array of vectors holding the vertex data
         int vIndex = 0;
-        for (int i = 0; i < resolution + 1; i++)
+        for (int i = 0; i < phiDivs; i++)
         {
-            u = Remap(i, 0, resolution, umin, umax);
-            for (int j = 0; j < resolution; j++)
+            float phi = radsPerPhiDiv * i;
+            u = phi;
+            for (int j = 0; j < thetaDivs; j++)
             {
-                v = Remap(j, 0, resolution, vmin, vmax);
+                float theta = radsPerThetaDiv * j;
+                // u = phi;
+                v = theta;
                 //   u = umin + i * (umax - umin) / resolution;
-                //   v = vmin + j * (vmax - vmin) / resolution;
+                //  v = vmin + j * (vmax - vmin) / resolution;
+
 
                 //the get radius function is where 'hamonics' are added
-                r = GetRadius(v, u, seconds);
+                //   r = GetRadius(u, v, seconds);
 
                 //add uvs so that we can texture the mesh if we want
-                uvs[vIndex] = new Vector2(j * 1.0f / resolution, i * 1.0f / resolution);
+                uvs[vIndex] = new Vector2(j * 1.0f / thetaDivs, i * 1.0f / phiDivs);
 
                 //create a vertex 
                 //optimization alert: since the only thing that changes here is the radius
@@ -111,30 +117,28 @@ public class ShellN : MonoBehaviour
         // be the same.
 
 
-        int triCount = 2 * (resolution + 1) * (resolution + 1);
+        int triCount = 2 * (phiDivs - 1) * (thetaDivs);
         int[] triIndecies = new int[triCount * 3];
         int curTriIndex = 0;
-        for (int i = 0; i < resolution; i++)
+        for (int i = 0; i < phiDivs - 1; i++)
         {
-            for (int j = 0; j < resolution; j++)
+            for (int j = 0; j < thetaDivs; j++)
             {
-                int ul = i * resolution + j;
-                int ur = i * resolution + ((j + 1) % resolution);
-                int ll = (i + 1) * resolution + j;
-                int lr = (i + 1) * resolution + ((j + 1) % resolution);
-
-                //triangle one
-                triIndecies[curTriIndex++] = ll;
+                int ul = i * thetaDivs + j;//"upper left" vert
+                int ur = i * thetaDivs + ((j + 1) % thetaDivs);//"upper right" vert
+                int ll = (i + 1) * thetaDivs + j;//"lower left" vert
+                int lr = (i + 1) * thetaDivs + ((j + 1) % thetaDivs); //"lower right" vert
+                                                                      //triangle one
                 triIndecies[curTriIndex++] = ul;
+                triIndecies[curTriIndex++] = ll;
                 triIndecies[curTriIndex++] = ur;
 
                 //triangle two
-                triIndecies[curTriIndex++] = ur;
-                triIndecies[curTriIndex++] = lr;
                 triIndecies[curTriIndex++] = ll;
+                triIndecies[curTriIndex++] = lr;
+                triIndecies[curTriIndex++] = ur;
             }
         }
-
         m.triangles = triIndecies;
         //use the triangle info to calculate vertex normals so we dont have to B)
         Vector3[] normals = m.normals;
