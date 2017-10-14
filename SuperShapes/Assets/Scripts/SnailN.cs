@@ -14,6 +14,9 @@ public class SnailN : MonoBehaviour
     // number of verts along the 'latitude'
     public int thetaDivs = 10;
 
+    public float vmin = -1 * Mathf.PI / 2;
+    public float vmax = Mathf.PI / 2;
+   
 
     public float u = 0.0f;
     public float v = 0.0f;
@@ -65,7 +68,7 @@ public class SnailN : MonoBehaviour
         Vector3[] vectors = new Vector3[phiDivs * thetaDivs];
         Vector2[] uvs = new Vector2[phiDivs * thetaDivs];
         float radsPerPhiDiv = 2.0f * Mathf.PI / (phiDivs - 1);
-        float radsPerThetaDiv = 2.0f * Mathf.PI / thetaDivs;
+        float radsPerThetaDiv = Mathf.PI / thetaDivs;
 
         float seconds = Time.timeSinceLevelLoad;
 
@@ -74,12 +77,15 @@ public class SnailN : MonoBehaviour
         for (int i = 0; i < phiDivs; i++)
         {
             float phi = radsPerPhiDiv * i;
-            u = phi;
+            u = Remap(i, 0, phiDivs, 0, Mathf.PI * 2);
+            // u = phi;
+          //  u = Remap(i, 0, radsPerPhiDiv, umin, umax);
             for (int j = 0; j < thetaDivs; j++)
             {
                 float theta = radsPerThetaDiv * j;
                 // u = phi;
-                v = theta;
+              //  v = theta;
+                v = Remap(j, 0, thetaDivs, vmin, vmax);
                 //   u = umin + i * (umax - umin) / resolution;
                 //  v = vmin + j * (vmax - vmin) / resolution;
 
