@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WhitneyUmbrella : MonoBehaviour
+public class BourMinimal : MonoBehaviour
 {
     public int resolution = 50;
 
@@ -24,6 +24,7 @@ public class WhitneyUmbrella : MonoBehaviour
     public float r = 50.0f;
     public float m2 = 0.0f;
     public float n = 0.0f;
+    public float t = 0.0f;
 
     public float x = 0.0f;
     public float y = 0.0f;
@@ -78,17 +79,19 @@ public class WhitneyUmbrella : MonoBehaviour
         {
             float phi = radsPerPhiDiv * i;
             u = phi;
+            n = u;
             for (int j = 0; j < thetaDivs; j++)
             {
                 float theta = radsPerThetaDiv * j;
                 // u = phi;
                 v = theta;
+                t = v;
                 //   u = umin + i * (umax - umin) / resolution;
                 //  v = vmin + j * (vmax - vmin) / resolution;
 
 
                 //the get radius function is where 'hamonics' are added
-                r = GetRadius(u, v, seconds);
+               // r = GetRadius(u, v, seconds);
 
                 //add uvs so that we can texture the mesh if we want
                 uvs[vIndex] = new Vector2(j * 1.0f / thetaDivs, i * 1.0f / phiDivs);
@@ -106,9 +109,16 @@ public class WhitneyUmbrella : MonoBehaviour
 
                 //0 <= u <= pi, 0 <= v <= 2 pi
 
-                x = r * 0.5f * Mathf.Pow(Mathf.Sin(u), 2.0f) * Mathf.Cos(2 * v);
-                y = r * 0.5f * Mathf.Pow(Mathf.Sin(u), 2.0f) * Mathf.Sin(2 * v);
-                z = r * Mathf.Sin(u) * Mathf.Sin(v);
+                // x = rn - 1 cos((n - 1) t) / (2(n - 1)) - rn + 1 cos((n + 1) t) / (2(n + 1))
+                // y = rn - 1 sin((n - 1) t) / (2(n - 1)) + rn + 1 sin((n + 1) t) / (2(n + 1))
+
+                //z = rn cos(n t) / n
+
+                //0 <= r, 0 <= v <= 2 pi
+                x = Mathf.Pow(r, n - 1) * Mathf.Cos((n - 1) * t) / (2 * (n - 1)) - Mathf.Pow(r, n + 1) * Mathf.Cos((n + 1) * t) / (2 * (n + 1));
+                y = Mathf.Pow(r, n - 1) * Mathf.Sin((n - 1) * t) / (2 * (n - 1)) - Mathf.Pow(r, n + 1) * Mathf.Sin((n + 1) * t) / (2 * (n + 1));
+                z = Mathf.Pow(r, n) * Mathf.Cos(n * t) / n;
+
                 vectors[vIndex++] = new Vector3(x, y, z);
 
 

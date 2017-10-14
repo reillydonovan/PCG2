@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WhitneyUmbrella : MonoBehaviour
+public class BentHorns : MonoBehaviour
 {
     public int resolution = 50;
 
@@ -77,12 +77,16 @@ public class WhitneyUmbrella : MonoBehaviour
         for (int i = 0; i < phiDivs; i++)
         {
             float phi = radsPerPhiDiv * i;
-            u = phi;
+           // u = phi;
+
+            u = Remap(i, 0, phiDivs, -1 * Mathf.PI, Mathf.PI);
+
             for (int j = 0; j < thetaDivs; j++)
             {
                 float theta = radsPerThetaDiv * j;
                 // u = phi;
-                v = theta;
+                //v = theta;
+                v = Remap(j, 0, phiDivs, -2 * Mathf.PI, 2 * Mathf.PI);
                 //   u = umin + i * (umax - umin) / resolution;
                 //  v = vmin + j * (vmax - vmin) / resolution;
 
@@ -98,17 +102,20 @@ public class WhitneyUmbrella : MonoBehaviour
                 //(when the number of divisions stays the same) we could cache these numbers
                 // and use a shader to create and apply the variations in radius and compute 
                 // the normals.
+                //  x = u - u3 / 3 + u v2
+                // y = v - v3 / 3 + v u2
+                // z = u2 - v2
+                // - 2 <= u <= 2, -2 <= v <= 2
 
-                //x = 0.5 sin2(u) cos(2 v)
-                //y = 0.5 sin2(u) sin(2 v)
+                // x = (2 + cos(u))(v / 3 - sin(v))
+                // y = (2 + cos(u - 2 PI / 3))(cos(v) - 1)
+                // z = (2 + cos(u + 2 PI / 3))(cos(v) - 1)
+                // - pi <= u <= pi
+                // - 2pi <= v <= 2pi
 
-                //z = sin(u) sin(v)
-
-                //0 <= u <= pi, 0 <= v <= 2 pi
-
-                x = r * 0.5f * Mathf.Pow(Mathf.Sin(u), 2.0f) * Mathf.Cos(2 * v);
-                y = r * 0.5f * Mathf.Pow(Mathf.Sin(u), 2.0f) * Mathf.Sin(2 * v);
-                z = r * Mathf.Sin(u) * Mathf.Sin(v);
+                x = (2 + Mathf.Cos(u)) * (v / 3 - Mathf.Sin(v));
+                y = (2 + Mathf.Cos(u - 2 * Mathf.PI / 3)) * (Mathf.Cos(v) - 1);
+                z = (2 + Mathf.Cos(u + 2 * Mathf.PI / 3)) * (Mathf.Cos(v) - 1);
                 vectors[vIndex++] = new Vector3(x, y, z);
 
 

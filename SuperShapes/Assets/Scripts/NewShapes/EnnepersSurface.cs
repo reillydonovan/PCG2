@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WhitneyUmbrella : MonoBehaviour
+public class EnnepersSurface : MonoBehaviour
 {
     public int resolution = 50;
 
@@ -77,12 +77,16 @@ public class WhitneyUmbrella : MonoBehaviour
         for (int i = 0; i < phiDivs; i++)
         {
             float phi = radsPerPhiDiv * i;
-            u = phi;
+           // u = phi;
+
+            u = Remap(i, 0, phiDivs, -2, 2);
+
             for (int j = 0; j < thetaDivs; j++)
             {
                 float theta = radsPerThetaDiv * j;
                 // u = phi;
-                v = theta;
+                //v = theta;
+                v = Remap(j, 0, phiDivs, -2, 2);
                 //   u = umin + i * (umax - umin) / resolution;
                 //  v = vmin + j * (vmax - vmin) / resolution;
 
@@ -98,17 +102,14 @@ public class WhitneyUmbrella : MonoBehaviour
                 //(when the number of divisions stays the same) we could cache these numbers
                 // and use a shader to create and apply the variations in radius and compute 
                 // the normals.
+                //  x = u - u3 / 3 + u v2
+                // y = v - v3 / 3 + v u2
+                // z = u2 - v2
+                // - 2 <= u <= 2, -2 <= v <= 2
 
-                //x = 0.5 sin2(u) cos(2 v)
-                //y = 0.5 sin2(u) sin(2 v)
-
-                //z = sin(u) sin(v)
-
-                //0 <= u <= pi, 0 <= v <= 2 pi
-
-                x = r * 0.5f * Mathf.Pow(Mathf.Sin(u), 2.0f) * Mathf.Cos(2 * v);
-                y = r * 0.5f * Mathf.Pow(Mathf.Sin(u), 2.0f) * Mathf.Sin(2 * v);
-                z = r * Mathf.Sin(u) * Mathf.Sin(v);
+                x = u - Mathf.Pow(u, 3) / 3 + u * Mathf.Pow(v, 2);
+                y = v - Mathf.Pow(v, 3) / 3 + v * Mathf.Pow(u, 2);
+                z = Mathf.Pow(u, 2) - Mathf.Pow(v, 2);
                 vectors[vIndex++] = new Vector3(x, y, z);
 
 
