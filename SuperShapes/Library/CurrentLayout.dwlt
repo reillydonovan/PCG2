@@ -40,8 +40,8 @@ MonoBehaviour:
     y: 0
     width: 477
     height: 496
-  m_MinSize: {x: 204, y: 221}
-  m_MaxSize: {x: 4004, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -89,8 +89,8 @@ MonoBehaviour:
     y: 0
     width: 387
     height: 767
-  m_MinSize: {x: 277, y: 71}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 14}
@@ -116,8 +116,8 @@ MonoBehaviour:
     y: 0
     width: 202
     height: 496
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -409,11 +409,11 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Packages/Renderator FREE/models
+    - Assets/Scripts/NewShapes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Packages/Renderator FREE/models
+  - Assets/Scripts/NewShapes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\reilly\Documents\GitHub\PCG2\SuperShapes
   m_IsLocked: 0
@@ -421,7 +421,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 215}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000006826000090260000b2260000b4260000e8260000f426000000ca9a3bffffff7f
+    m_ExpandedIDs: 000000006c26000094260000b6260000b8260000ec260000f826000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -449,7 +449,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000006826000090260000b2260000b4260000e8260000f4260000
+    m_ExpandedIDs: 000000006c26000094260000b6260000b8260000ec260000f8260000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -565,20 +565,20 @@ MonoBehaviour:
     height: 475
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 18aefbff
-    m_LastClickedID: -283112
-    m_ExpandedIDs: 1afcffff000000004627000050270000
+    m_SelectedIDs: 343dfcff
+    m_LastClickedID: -246476
+    m_ExpandedIDs: c8d3fcff1afcffff0000000062270000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Verrill
-      m_OriginalName: Verrill
+      m_Name: Lemnescate
+      m_OriginalName: Lemnescate
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: -283112
+      m_UserData: -246476
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
@@ -617,7 +617,7 @@ MonoBehaviour:
     width: 370
     height: 475
   m_SceneLighting: 1
-  lastFramingTime: 1962.8546620873692
+  lastFramingTime: 22967.47305925132
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
@@ -647,13 +647,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.008464326, y: 0.99288034, z: 0.075078994, w: 0.09436354}
+    m_Target: {x: 0.30469322, y: 0.15513623, z: 0.051578514, w: -0.9385445}
     speed: 2
-    m_Value: {x: -0.008462531, y: 0.9926697, z: 0.075063065, w: 0.09434352}
+    m_Value: {x: 0.30462754, y: 0.15510277, z: 0.051567394, w: -0.93834215}
   m_Size:
-    m_Target: 6.1610446
+    m_Target: 5.4494376
     speed: 2
-    m_Value: 6.1610446
+    m_Value: 5.4494376
   m_Ortho:
     m_Target: 0
     speed: 2
