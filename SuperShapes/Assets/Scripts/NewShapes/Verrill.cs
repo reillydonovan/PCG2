@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BentHorns : MonoBehaviour
+public class Verrill : MonoBehaviour
 {
     public int resolution = 50;
 
@@ -67,7 +67,7 @@ public class BentHorns : MonoBehaviour
 
         Vector3[] vectors = new Vector3[phiDivs * thetaDivs];
         Vector2[] uvs = new Vector2[phiDivs * thetaDivs];
-        float radsPerPhiDiv =  Mathf.PI / (phiDivs - 1);
+        float radsPerPhiDiv = Mathf.PI / (phiDivs - 1);
         float radsPerThetaDiv = 2.0f * Mathf.PI / thetaDivs;
 
         float seconds = Time.timeSinceLevelLoad;
@@ -76,17 +76,17 @@ public class BentHorns : MonoBehaviour
         int vIndex = 0;
         for (int i = 0; i < phiDivs; i++)
         {
-            float phi = radsPerPhiDiv * i;
-           // u = phi;
+          //  float phi = radsPerPhiDiv * i;
+            // u = phi;
 
-            u = Remap(i, 0, phiDivs - 1, -1 * Mathf.PI, Mathf.PI);
+            u = Remap(i, 0, phiDivs - 1, 0.5f, 1.0f);
 
             for (int j = 0; j < thetaDivs; j++)
             {
-                float theta = radsPerThetaDiv * j;
+             //   float theta = radsPerThetaDiv * j;
                 // u = phi;
                 //v = theta;
-                v = Remap(j, 0, phiDivs, -2 * Mathf.PI, 2 * Mathf.PI);
+                v = Remap(j, 0, thetaDivs, 0, 2 * Mathf.PI);
                 //   u = umin + i * (umax - umin) / resolution;
                 //  v = vmin + j * (vmax - vmin) / resolution;
 
@@ -112,10 +112,9 @@ public class BentHorns : MonoBehaviour
                 // z = (2 + cos(u + 2 PI / 3))(cos(v) - 1)
                 // - pi <= u <= pi
                 // - 2pi <= v <= 2pi
-
-                x = (2 + Mathf.Cos(u)) * (v / 3 - Mathf.Sin(v));
-                y = (2 + Mathf.Cos(u - 2 * Mathf.PI / 3)) * (Mathf.Cos(v) - 1);
-                z = (2 + Mathf.Cos(u + 2 * Mathf.PI / 3)) * (Mathf.Cos(v) - 1);
+                x = -2 * u * Mathf.Cos(v) + (2 * Mathf.Cos(v)) / u - (2 * u * u * u * Mathf.Cos(3 * v)) / 3;
+                y = 6 * u * Mathf.Sin(v) - (2 * Mathf.Sin(v)) / u - (2 * u * u * u * Mathf.Sin(3 * v)) / 3;
+                z = 4 * Mathf.Log(u);
                 vectors[vIndex++] = new Vector3(x, y, z);
 
 

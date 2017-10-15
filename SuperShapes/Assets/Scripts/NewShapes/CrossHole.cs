@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BentHorns : MonoBehaviour
+public class CrossHole : MonoBehaviour
 {
     public int resolution = 50;
 
@@ -28,6 +28,8 @@ public class BentHorns : MonoBehaviour
     public float x = 0.0f;
     public float y = 0.0f;
     public float z = 0.0f;
+
+    float R = 0.0f;
 
     // of the sphere
     public int xMod1Period = 4; //how many ups and downs there are
@@ -67,7 +69,7 @@ public class BentHorns : MonoBehaviour
 
         Vector3[] vectors = new Vector3[phiDivs * thetaDivs];
         Vector2[] uvs = new Vector2[phiDivs * thetaDivs];
-        float radsPerPhiDiv =  Mathf.PI / (phiDivs - 1);
+        float radsPerPhiDiv = Mathf.PI / (phiDivs - 1);
         float radsPerThetaDiv = 2.0f * Mathf.PI / thetaDivs;
 
         float seconds = Time.timeSinceLevelLoad;
@@ -77,16 +79,16 @@ public class BentHorns : MonoBehaviour
         for (int i = 0; i < phiDivs; i++)
         {
             float phi = radsPerPhiDiv * i;
-           // u = phi;
+            // u = phi;
 
-            u = Remap(i, 0, phiDivs - 1, -1 * Mathf.PI, Mathf.PI);
+            u = Remap(i, 0, phiDivs - 1, 0, Mathf.PI);
 
             for (int j = 0; j < thetaDivs; j++)
             {
                 float theta = radsPerThetaDiv * j;
                 // u = phi;
                 //v = theta;
-                v = Remap(j, 0, phiDivs, -2 * Mathf.PI, 2 * Mathf.PI);
+                v = Remap(j, 0, phiDivs, 0, Mathf.PI);
                 //   u = umin + i * (umax - umin) / resolution;
                 //  v = vmin + j * (vmax - vmin) / resolution;
 
@@ -102,20 +104,13 @@ public class BentHorns : MonoBehaviour
                 //(when the number of divisions stays the same) we could cache these numbers
                 // and use a shader to create and apply the variations in radius and compute 
                 // the normals.
-                //  x = u - u3 / 3 + u v2
-                // y = v - v3 / 3 + v u2
-                // z = u2 - v2
-                // - 2 <= u <= 2, -2 <= v <= 2
 
-                // x = (2 + cos(u))(v / 3 - sin(v))
-                // y = (2 + cos(u - 2 PI / 3))(cos(v) - 1)
-                // z = (2 + cos(u + 2 PI / 3))(cos(v) - 1)
-                // - pi <= u <= pi
-                // - 2pi <= v <= 2pi
+                R = Mathf.Pow(Mathf.Cos(u), 2) * Mathf.Pow(Mathf.Cos(v), 2) + Mathf.Pow(Mathf.Sin(v), 2);
 
-                x = (2 + Mathf.Cos(u)) * (v / 3 - Mathf.Sin(v));
-                y = (2 + Mathf.Cos(u - 2 * Mathf.PI / 3)) * (Mathf.Cos(v) - 1);
-                z = (2 + Mathf.Cos(u + 2 * Mathf.PI / 3)) * (Mathf.Cos(v) - 1);
+                x = Mathf.Cos(u) / (R * Mathf.Tan(v));
+                y = Mathf.Cos(2 * u) / R;
+                z = Mathf.Sin(2 * v) / R;
+             
                 vectors[vIndex++] = new Vector3(x, y, z);
 
 

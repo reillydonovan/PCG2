@@ -83,7 +83,7 @@ public class SuperShapeN : MonoBehaviour
 		Vector3[] vectors = new Vector3[phiDivs * thetaDivs];
 		Vector2[] uvs = new Vector2[phiDivs * thetaDivs];
 		float radsPerPhiDiv = Mathf.PI/(phiDivs-1);
-		float radsPerThetaDiv = 2.0f*Mathf.PI/thetaDivs;
+		float radsPerThetaDiv = 2 * Mathf.PI/thetaDivs;
 
 		float seconds = Time.timeSinceLevelLoad;
 
@@ -93,11 +93,13 @@ public class SuperShapeN : MonoBehaviour
 		{
 			float phi = radsPerPhiDiv*i;
            // float r1 = Shape(phi, m1, n11, n12, n13, a1, b1);
-            float r2 = Shape(phi, m2, n21, n22, n23, a2, b2);
 
+         //  float phi = Remap(i, 0, phiDivs - 1, -1 * Mathf.PI, Mathf.PI);
+            float r2 = Shape(phi, m2, n21, n22, n23, a2, b2);
             for (int j=0; j < thetaDivs; j++)
 			{
-				float theta = radsPerThetaDiv*j;
+                float theta = radsPerThetaDiv*j;
+              //  float theta = Remap(j, 0, thetaDivs, -1 * Mathf.PI / 2, Mathf.PI / 2);
                 //  float r2 = Shape(theta, m2, n21, n22, n23, a2, b2);
                 float r1 = Shape(theta, m1, n11, n12, n13, a1, b1);
                 //the get radius function is where 'hamonics' are added
@@ -223,4 +225,11 @@ public class SuperShapeN : MonoBehaviour
 		Gizmos.DrawWireMesh(UpdateMesh(null),transform.position,transform.rotation,transform.localScale);
 
 	}
+
+    float Remap(float val, float srcMin, float srcMax, float dstMin, float dstMax)
+    {
+        if (val >= srcMax) return dstMax;
+        if (val <= srcMin) return dstMin;
+        return dstMin + (val - srcMin) / (srcMax - srcMin) * (dstMax - dstMin);
+    }
 }
